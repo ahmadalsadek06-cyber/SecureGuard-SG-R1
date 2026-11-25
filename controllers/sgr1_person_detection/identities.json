@@ -1,0 +1,18 @@
+{
+  "_note": "Simulated identities only. Matching uses the NPC Solid 'model' tag returned by Webots Camera Recognition, not facial recognition.",
+  "alert_cooldown_s": 30,
+  "recognition_max_range_m": 10,
+  "zones": {
+    "A1": {"name": "Reception", "rect": [-11.9, -4.1, -7.9, -1.6]},
+    "A2": {"name": "Main Entrance", "rect": [-3.9, 3.9, -7.9, -1.6]},
+    "B1": {"name": "Central Corridor", "rect": [-11.9, 11.9, -1.4, 1.4]},
+    "B2": {"name": "Warehouse", "rect": [4.1, 11.9, -7.9, -1.6]},
+    "C1": {"name": "Research Laboratory", "rect": [-11.9, -0.1, 1.6, 7.9]},
+    "C2": {"name": "Server Room", "rect": [0.1, 11.9, 1.6, 7.9]}
+  },
+  "identities": {
+    "Employee_01": {"badge_id": "SG-EMP-1001", "role": "employee", "allowed_zones": ["A1", "A2", "B1", "B2", "C1", "C2"]},
+    "Student_01": {"badge_id": "SG-STU-2001", "role": "student", "allowed_zones": ["A1", "A2", "B1", "C1"]},
+    "Visitor_01": {"badge_id": "SG-VIS-3001", "role": "visitor", "allowed_zones": ["A1", "A2", "B1"]}
+  }
+}

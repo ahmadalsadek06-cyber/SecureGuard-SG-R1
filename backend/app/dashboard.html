@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SG-R1 Event Console</title>
+<style>
+  :root { --bg:#0f1419; --panel:#182029; --text:#e6edf3; --muted:#8b98a5; --line:#2a3541;
+          --high:#ff6b6b; --warn:#f0b429; --ok:#3ecf8e; }
+  body { margin:0; font:14px/1.4 system-ui, sans-serif; background:var(--bg); color:var(--text); }
+  header, main { max-width:1200px; margin:0 auto; padding:16px; }
+  header { display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:space-between; }
+  h1 { font-size:18px; margin:0; }
+  .note { color:var(--muted); font-size:12px; }
+  input, button { font:inherit; padding:6px 10px; border-radius:6px; border:1px solid var(--line);
+                  background:var(--panel); color:var(--text); }
+  section { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:12px; margin-bottom:16px; overflow-x:auto; }
+  table { width:100%; border-collapse:collapse; }
+  th, td { text-align:left; padding:6px 8px; border-bottom:1px solid var(--line); white-space:nowrap; }
+  th { color:var(--muted); font-weight:600; }
+  .high, .critical, .invalid, .UNAUTHORIZED { color:var(--high); }
+  .warning, .UNKNOWN { color:var(--warn); }
+  .verified, .AUTHORIZED { color:var(--ok); }
+</style>
+</head>
+<body>
+<header>
+  <div><h1>SecureGuard SG-R1 Event Console</h1>
+  <div class="note">Simulated Webots detections. "verified" = backend HMAC intact since ingestion, not proof the observation is physically real.</div></div>
+  <form id="login"><input id="token" type="password" placeholder="Dashboard token" autocomplete="off" aria-label="Dashboard token"> <button>Connect</button></form>
+</header>
+<main>
+  <section><b>Robots</b> <span id="audit" class="note"></span><table id="robots"></table></section>
+  <section><b>Events</b> <span id="status" class="note"></span><table id="events"></table></section>
+</main>
+<script>
+let token = sessionStorage.getItem("sg_token") || "";
+const cell = (row, text, cls) => { const td = row.insertCell(); td.textContent = text ?? ""; if (cls) td.className = cls; };
+function head(table, cols) { table.innerHTML = ""; const r = table.createTHead().insertRow(); cols.forEach(c => { const th = document.createElement("th"); th.textContent = c; r.appendChild(th); }); return table.createTBody(); }
+async function get(path) {
+  const r = await fetch(path, { headers: { Authorization: "Bearer " + token } });
+  if (!r.ok) throw new Error(r.status === 401 ? "Token rejected" : "HTTP " + r.status);
+  return r.json();
+}
+async function refresh() {
+  if (!token) { document.getElementById("status").textContent = "Enter the dashboard token."; return; }
+  try {
+    const [events, robots, audit] = await Promise.all([get("/api/v1/events?limit=100"), get("/api/v1/robots"), get("/api/v1/audit")]);
+    let body = head(document.getElementById("robots"), ["Robot", "Last seen (UTC)", "Zone", "X", "Y", "Speed m/s", "Camera", "Last event"]);
+    robots.forEach(r => { const row = body.insertRow(); cell(row, r.robot_id); cell(row, r.last_seen); cell(row, r.zone);
+      cell(row, r.position.x.toFixed(2)); cell(row, r.position.y.toFixed(2)); cell(row, r.state ? r.state.speed_mps.toFixed(2) : "");
+      cell(row, r.state ? (r.state.camera_enabled ? "on" : "off") : ""); cell(row, r.last_event_type); });
+    body = head(document.getElementById("events"), ["Time (UTC)", "Type", "Severity", "Zone", "Person", "Class", "Dist m", "Integrity", "ID"]);
+    events.forEach(e => { const row = body.insertRow(); const p = e.person || {};
+      cell(row, e.timestamp); cell(row, e.event_type); cell(row, e.severity, e.severity); cell(row, e.zone);
+      cell(row, p.person_id); cell(row, p.classification, p.classification); cell(row, p.distance_m?.toFixed(2));
+      cell(row, e.integrity, e.integrity); cell(row, e.event_id); });
+    document.getElementById("audit").textContent = `audit: ${audit.verified} verified, ${audit.invalid} invalid | elastic: ${typeof audit.elastic === "string" ? audit.elastic : JSON.stringify(audit.elastic)}`;
+    document.getElementById("status").textContent = "updated " + new Date().toLocaleTimeString();
+  } catch (err) { document.getElementById("status").textContent = err.message; }
+}
+document.getElementById("login").addEventListener("submit", ev => { ev.preventDefault();
+  token = document.getElementById("token").value; sessionStorage.setItem("sg_token", token);
+  document.getElementById("token").value = ""; refresh(); });
+refresh(); setInterval(refresh, 3000);
+</script>
+</body>
+</html>

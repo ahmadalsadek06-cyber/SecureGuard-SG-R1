@@ -1,0 +1,219 @@
+#VRML_SIM R2025a utf8
+# SecureGuard SG-R1: lightweight four-wheel skid-steer security patrol robot.
+# ENU: +X forward, +Y left, +Z up. Floor is robot-local Z=0.
+# Envelope approximately .70 x .50 x .90 m; mass 26.8 kg.
+# Requires SGR1_tire/default ContactProperties (provided in generated world).
+PROTO SecureGuardSGR1 [
+  field SFVec3f translation 0 0 .005
+  field SFRotation rotation 0 0 1 0
+  field SFString name "SecureGuard SG-R1"
+  field SFString controller "sgr1_controller"
+  field MFString controllerArgs []
+  field SFBool supervisor FALSE
+  field MFNode lidarSlot []
+  field SFNode cameraRecognition NULL  # optional Recognition node; NULL keeps original camera
+] {
+  Robot {
+    translation IS translation rotation IS rotation name IS name
+    controller IS controller controllerArgs IS controllerArgs supervisor IS supervisor
+    model "SecureGuard SG-R1" window "<generic>"
+    contactMaterial "SGR1_body" selfCollision FALSE
+    children [
+Pose { translation 0 0 0.3 children [ Shape {
+      appearance PBRAppearance { baseColor .06 .09 .12 roughness .8 metalness 0 }
+      geometry Box { size 0.62 0.35 0.22 } } ] }
+Pose { translation 0 0 0.445 children [ Shape {
+      appearance PBRAppearance { baseColor .80 .85 .88 roughness .8 metalness 0 }
+      geometry IndexedFaceSet { coord Coordinate { point [
+        -0.228 -0.185 -0.055, 0.228 -0.185 -0.055, 0.265 -0.148 -0.055, 0.265 0.148 -0.055, 0.228 0.185 -0.055, -0.228 0.185 -0.055, -0.265 0.148 -0.055, -0.265 -0.148 -0.055, -0.228 -0.185 0.055, 0.228 -0.185 0.055, 0.265 -0.148 0.055, 0.265 0.148 0.055, 0.228 0.185 0.055, -0.228 0.185 0.055, -0.265 0.148 0.055, -0.265 -0.148 0.055
+      ] } coordIndex [ 7 6 5 4 3 2 1 0 -1, 8 9 10 11 12 13 14 15 -1, 0 1 9 8 -1, 1 2 10 9 -1, 2 3 11 10 -1, 3 4 12 11 -1, 4 5 13 12 -1, 5 6 14 13 -1, 6 7 15 14 -1, 7 0 8 15 -1 ] }
+    } ] }
+Pose { translation -0.04 0 0.61 children [ Shape {
+      appearance PBRAppearance { baseColor .80 .85 .88 roughness .8 metalness 0 }
+      geometry Box { size 0.2 0.24 0.22 } } ] }
+Pose { translation 0.015 0 0.79 children [ Shape {
+      appearance PBRAppearance { baseColor .80 .85 .88 roughness .8 metalness 0 }
+      geometry IndexedFaceSet { coord Coordinate { point [
+        -0.11599999999999999 -0.16 -0.09, 0.11599999999999999 -0.16 -0.09, 0.145 -0.131 -0.09, 0.145 0.131 -0.09, 0.11599999999999999 0.16 -0.09, -0.11599999999999999 0.16 -0.09, -0.145 0.131 -0.09, -0.145 -0.131 -0.09, -0.11599999999999999 -0.16 0.09, 0.11599999999999999 -0.16 0.09, 0.145 -0.131 0.09, 0.145 0.131 0.09, 0.11599999999999999 0.16 0.09, -0.11599999999999999 0.16 0.09, -0.145 0.131 0.09, -0.145 -0.131 0.09
+      ] } coordIndex [ 7 6 5 4 3 2 1 0 -1, 8 9 10 11 12 13 14 15 -1, 0 1 9 8 -1, 1 2 10 9 -1, 2 3 11 10 -1, 3 4 12 11 -1, 4 5 13 12 -1, 5 6 14 13 -1, 6 7 15 14 -1, 7 0 8 15 -1 ] }
+    } ] }
+Pose { translation 0.164 0 0.79 children [ Shape {
+      appearance PBRAppearance { baseColor .06 .09 .12 roughness .8 metalness 0 }
+      geometry Box { size 0.01 0.28 0.105 } } ] }
+Pose { translation -0.135 0 0.79 children [ Shape {
+      appearance PBRAppearance { baseColor .06 .09 .12 roughness .8 metalness 0 }
+      geometry Box { size 0.012 0.23 0.09 } } ] }
+Pose { translation 0 0 0.89 children [ Shape {
+      appearance PBRAppearance { baseColor .06 .09 .12 roughness .8 metalness 0 }
+      geometry Box { size 0.22 0.22 0.02 } } ] }
+Pose { translation 0 -0.19 0.445 children [ Shape {
+      appearance PBRAppearance { baseColor .02 .40 .60 roughness .8 metalness 0 }
+      geometry Box { size 0.49 0.012 0.035 } } ] }
+Pose { translation -0.04 -0.1216 0.61 children [ Shape {
+      appearance PBRAppearance { baseColor .02 .40 .60 roughness .8 metalness 0 }
+      geometry Box { size 0.15 0.008 0.04 } } ] }
+Pose { translation 0 0.19 0.445 children [ Shape {
+      appearance PBRAppearance { baseColor .02 .40 .60 roughness .8 metalness 0 }
+      geometry Box { size 0.49 0.012 0.035 } } ] }
+Pose { translation -0.04 0.1216 0.61 children [ Shape {
+      appearance PBRAppearance { baseColor .02 .40 .60 roughness .8 metalness 0 }
+      geometry Box { size 0.15 0.008 0.04 } } ] }
+Pose { translation -0.33 0 0.29 children [ Shape {
+      appearance PBRAppearance { baseColor .035 .04 .045 roughness .8 metalness 0 }
+      geometry Box { size 0.04 0.4 0.1 } } ] }
+Pose { translation 0.33 0 0.29 children [ Shape {
+      appearance PBRAppearance { baseColor .035 .04 .045 roughness .8 metalness 0 }
+      geometry Box { size 0.04 0.4 0.1 } } ] }
+Pose { translation 0.352 -0.13 0.325 children [ Shape {
+      appearance PBRAppearance { baseColor .65 .90 1 roughness .8 metalness 0 }
+      geometry Box { size 0.006 0.07 0.025 } } ] }
+Pose { translation -0.352 -0.13 0.325 children [ Shape {
+      appearance PBRAppearance { baseColor .65 .06 .05 roughness .8 metalness 0 }
+      geometry Box { size 0.006 0.06 0.025 } } ] }
+Pose { translation 0.352 0.13 0.325 children [ Shape {
+      appearance PBRAppearance { baseColor .65 .90 1 roughness .8 metalness 0 }
+      geometry Box { size 0.006 0.07 0.025 } } ] }
+Pose { translation -0.352 0.13 0.325 children [ Shape {
+      appearance PBRAppearance { baseColor .65 .06 .05 roughness .8 metalness 0 }
+      geometry Box { size 0.006 0.06 0.025 } } ] }
+Pose { translation 0.02 0 0.885 children [ Shape {
+      appearance PBRAppearance { baseColor .02 .40 .60 roughness .8 metalness 0 }
+      geometry Box { size 0.17 0.16 0.01 } } ] }
+Pose { translation 0.266 0 0.445 rotation 1 1 1 2.09439510239 children [ Shape {
+          appearance PBRAppearance { baseColorMap ImageTexture { url [ "textures/sgr1_badge.png" ] }
+          roughness 1 metalness 0 } geometry Plane { size 0.27 0.0675 } } ] }
+Pose { translation 0 -0.191 0.445 rotation 1 0 0 1.57079632679 children [ Shape {
+          appearance PBRAppearance { baseColorMap ImageTexture { url [ "textures/sgr1_badge.png" ] }
+          roughness 1 metalness 0 } geometry Plane { size 0.3 0.075 } } ] }
+Pose { translation -0.215 0 .13 rotation 1 0 0 1.57079632679
+          children [ Shape { appearance PBRAppearance { baseColor .20 .24 .27 roughness 1 metalness 0 }
+          geometry Cylinder { radius .022 height .43 subdivision 12 } } ] }
+Pose { translation 0.215 0 .13 rotation 1 0 0 1.57079632679
+          children [ Shape { appearance PBRAppearance { baseColor .20 .24 .27 roughness 1 metalness 0 }
+          geometry Cylinder { radius .022 height .43 subdivision 12 } } ] }
+HingeJoint {
+      jointParameters HingeJointParameters { axis 0 1 0 anchor 0.215 0.215 .13 dampingConstant .015 }
+      device [
+        RotationalMotor { name "front_left_motor" maxVelocity 12 maxTorque 8 acceleration 20 }
+        PositionSensor { name "front_left_encoder" }
+      ]
+      endPoint Solid {
+        translation 0.215 0.215 .13
+        rotation 1 0 0 1.57079632679
+        name "front_left_wheel"
+        contactMaterial "SGR1_tire"
+        children [
+          Shape { appearance PBRAppearance { baseColor .035 .04 .045 roughness 1 metalness 0 }
+            geometry Cylinder { radius .13 height .07 subdivision 20 } }
+          Shape { appearance PBRAppearance { baseColor .32 .38 .43 roughness .8 metalness 0 }
+            geometry Cylinder { radius .065 height .072 subdivision 12 } }
+        ]
+        boundingObject Cylinder { radius .13 height .07 subdivision 20 }
+        physics Physics { density -1 mass 1.2 }
+      }
+    }
+HingeJoint {
+      jointParameters HingeJointParameters { axis 0 1 0 anchor 0.215 -0.215 .13 dampingConstant .015 }
+      device [
+        RotationalMotor { name "front_right_motor" maxVelocity 12 maxTorque 8 acceleration 20 }
+        PositionSensor { name "front_right_encoder" }
+      ]
+      endPoint Solid {
+        translation 0.215 -0.215 .13
+        rotation 1 0 0 1.57079632679
+        name "front_right_wheel"
+        contactMaterial "SGR1_tire"
+        children [
+          Shape { appearance PBRAppearance { baseColor .035 .04 .045 roughness 1 metalness 0 }
+            geometry Cylinder { radius .13 height .07 subdivision 20 } }
+          Shape { appearance PBRAppearance { baseColor .32 .38 .43 roughness .8 metalness 0 }
+            geometry Cylinder { radius .065 height .072 subdivision 12 } }
+        ]
+        boundingObject Cylinder { radius .13 height .07 subdivision 20 }
+        physics Physics { density -1 mass 1.2 }
+      }
+    }
+HingeJoint {
+      jointParameters HingeJointParameters { axis 0 1 0 anchor -0.215 0.215 .13 dampingConstant .015 }
+      device [
+        RotationalMotor { name "rear_left_motor" maxVelocity 12 maxTorque 8 acceleration 20 }
+        PositionSensor { name "rear_left_encoder" }
+      ]
+      endPoint Solid {
+        translation -0.215 0.215 .13
+        rotation 1 0 0 1.57079632679
+        name "rear_left_wheel"
+        contactMaterial "SGR1_tire"
+        children [
+          Shape { appearance PBRAppearance { baseColor .035 .04 .045 roughness 1 metalness 0 }
+            geometry Cylinder { radius .13 height .07 subdivision 20 } }
+          Shape { appearance PBRAppearance { baseColor .32 .38 .43 roughness .8 metalness 0 }
+            geometry Cylinder { radius .065 height .072 subdivision 12 } }
+        ]
+        boundingObject Cylinder { radius .13 height .07 subdivision 20 }
+        physics Physics { density -1 mass 1.2 }
+      }
+    }
+HingeJoint {
+      jointParameters HingeJointParameters { axis 0 1 0 anchor -0.215 -0.215 .13 dampingConstant .015 }
+      device [
+        RotationalMotor { name "rear_right_motor" maxVelocity 12 maxTorque 8 acceleration 20 }
+        PositionSensor { name "rear_right_encoder" }
+      ]
+      endPoint Solid {
+        translation -0.215 -0.215 .13
+        rotation 1 0 0 1.57079632679
+        name "rear_right_wheel"
+        contactMaterial "SGR1_tire"
+        children [
+          Shape { appearance PBRAppearance { baseColor .035 .04 .045 roughness 1 metalness 0 }
+            geometry Cylinder { radius .13 height .07 subdivision 20 } }
+          Shape { appearance PBRAppearance { baseColor .32 .38 .43 roughness .8 metalness 0 }
+            geometry Cylinder { radius .065 height .072 subdivision 12 } }
+        ]
+        boundingObject Cylinder { radius .13 height .07 subdivision 20 }
+        physics Physics { density -1 mass 1.2 }
+      }
+    }
+Camera {
+      translation .174 0 .80
+      name "front_camera"
+      fieldOfView 1.1 width 160 height 120 near .03 far 20
+      antiAliasing FALSE noise 0 motionBlur 0
+      recognition IS cameraRecognition
+      children [ Shape { appearance PBRAppearance { baseColor .02 .10 .18 roughness .7 metalness 0 }
+        geometry Box { size .012 .055 .04 } } ]
+    }
+    # Future LiDAR mount: centered at roof, +X forward / +Z up. No scanner yet.
+    DEF LIDAR_MOUNT Pose { translation 0 0 .90 children IS lidarSlot }
+    InertialUnit { name "imu" }
+
+DistanceSensor { translation 0.356 0 .32 rotation 0 0 1 0
+          name "distance_front" type "generic" numberOfRays 1
+          lookupTable [ 0 0 0, 5 5 0 ] }
+DistanceSensor { translation -0.356 0 .32 rotation 0 0 1 3.141592653589793
+          name "distance_rear" type "generic" numberOfRays 1
+          lookupTable [ 0 0 0, 5 5 0 ] }
+DistanceSensor { translation 0 0.255 .32 rotation 0 0 1 1.5707963267948966
+          name "distance_left" type "generic" numberOfRays 1
+          lookupTable [ 0 0 0, 5 5 0 ] }
+DistanceSensor { translation 0 -0.255 .32 rotation 0 0 1 -1.5707963267948966
+          name "distance_right" type "generic" numberOfRays 1
+          lookupTable [ 0 0 0, 5 5 0 ] }
+DistanceSensor { translation 0.35 0.17 .32 rotation 0 0 1 0.6
+          name "distance_front_left" type "generic" numberOfRays 1
+          lookupTable [ 0 0 0, 5 5 0 ] }
+DistanceSensor { translation 0.35 -0.17 .32 rotation 0 0 1 -0.6
+          name "distance_front_right" type "generic" numberOfRays 1
+          lookupTable [ 0 0 0, 5 5 0 ] }
+    ]
+    boundingObject Group { children [
+Pose { translation 0 0 0.3 children [ Box { size 0.7 0.4 0.22 } ] }
+Pose { translation 0 0 0.445 children [ Box { size 0.53 0.38 0.11 } ] }
+Pose { translation -0.04 0 0.61 children [ Box { size 0.2 0.24 0.22 } ] }
+Pose { translation 0.015 0 0.79 children [ Box { size 0.3 0.32 0.18 } ] }
+Pose { translation 0 0 0.89 children [ Box { size 0.22 0.22 0.02 } ] }
+    ] }
+    physics Physics { density -1 mass 22 centerOfMass [ 0 0 .27 ] }
+  }
+}
